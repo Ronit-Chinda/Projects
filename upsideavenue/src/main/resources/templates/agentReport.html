@@ -23,32 +23,32 @@
     </div>
 
     <div div th:if="${ not#lists.isEmpty(reports)}" class="container table-responsive">
-        <table class="table table-borderless table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Username</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Rented</th>
-                    <th scope="col">Sold</th>
-                    <th scope="col">Transactions</th>
-                    <th scope="col">Avg Returns</th>
-                    <th scope="col">Market Duration</th>
+        <div class="p-4 mb-4 border text-bg-dark rounded-3 d-sm-flex justify-content-around align-items-center d-none d-sm-block"
+            th:fragment="reportCard">
+            <h6 class="my-1 col-md-2">
+                Username
+            </h6>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="report: ${reports}">
-                    <th scope="row" th:text="${report.username}">username</th>
-                    <td th:text="${report.accountname}">name</td>
-                    <td th:text="${report.transactions - report.sold}">Rented</td>
-                    <td th:text="${report.sold}">Sold</td>
-                    <td th:text="${report.transactions}">Transactions</td>
-                    <td th:text="${report.avgReturns}">Avg Returns</td>
-                    <td th:text="${report.duration}">Duration</td>
-                </tr>
+            <h6 class="fw-bold my-1 col-md-4 ps-lg-4">
+                Agent Name
+            </h6>
 
-            </tbody>
-        </table>
+            <h6 class="my-1 col-md-2">
+                Transactions
+            </h6>
+
+            <h6 class="my-1 col-md-2">
+                Avg Sales
+            </h6>
+
+            <h6 class="my-1 col-md-2 d-none d-lg-block">
+                Market Duration <small>(Months)</small>
+            </h6>
+        </div>
+        <div th:each="report: ${reports}">
+            <div th:replace="~{fragments/reportCard :: reportCard(report=${report})}">
+            </div>
+        </div>
     </div>
 
 
