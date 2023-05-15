@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from constants import WIDTH, HEIGHT, SQSIZE, BLACK, GREEN, WHITE, CLOUD, DARKGREY, GREY,playButton,exitButtonPause,exitButton,continueButton,resetButton,winnerPlate,ownerNameButton,ownerRollNo,easyButton,mediumButton,hardButton,extremeButton,ORANGE,PURPLE,RED
+from constants import WIDTH, HEIGHT, SQSIZE, BLACK, GREEN, WHITE, CLOUD, DARKGREY, GREY, playButton, exitButtonPause, exitButton, continueButton, resetButton, winnerPlate, ownerNameButton, ownerRollNo, easyButton, mediumButton, hardButton, extremeButton, ORANGE, PURPLE, RED
 from pieces import *
 from game import Game
 from algorithm import minimax
@@ -14,10 +14,11 @@ font = pygame.font.SysFont('bitstreamverasans', 25, italic=True)
 
 
 def get_row_col_from_mouse(pos):
-        x, y = pos
-        row = y//SQSIZE
-        col = x//SQSIZE
-        return row, col
+    x, y = pos
+    row = y//SQSIZE
+    col = x//SQSIZE
+    return row, col
+
 
 def pauseOptions():
     # play option
@@ -37,21 +38,23 @@ def pauseOptions():
     text = font.render("Exit Game", True, (0, 0, 0))
     text_rect = text.get_rect(center=exitButtonPause.center)
     window.blit(text, text_rect)
-    pygame.display.update() 
-    
+    pygame.display.update()
+
+
 def playOptions():
 
-    #ownerDetails
-    #ownerName
-    detailsFont = pygame.font.SysFont('bitstreamverasans', 15 ,bold=False, italic=True)
+    # ownerDetails
+    # ownerName
+    detailsFont = pygame.font.SysFont(
+        'bitstreamverasans', 15, bold=False, italic=True)
     pygame.draw.rect(window, BLACK, ownerNameButton)
-    text = detailsFont.render("Made By Ronit Chinda", True, (230,0,0))
+    text = detailsFont.render("Made By Ronit Chinda", True, (230, 0, 0))
     text_rect = text.get_rect(center=ownerNameButton.center)
     window.blit(text, text_rect)
 
-    #ownerRollNo
+    # ownerRollNo
     pygame.draw.rect(window, BLACK, ownerRollNo)
-    text = detailsFont.render("RollNo - 2101174", True, (230,0,0))
+    text = detailsFont.render("RollNo - 2101174", True, (230, 0, 0))
     text_rect = text.get_rect(center=ownerRollNo.center)
     window.blit(text, text_rect)
 
@@ -67,6 +70,7 @@ def playOptions():
     text_rect = text.get_rect(center=exitButton.center)
     window.blit(text, text_rect)
     pygame.display.update()
+
 
 def levelOptions():
     # Easy option
@@ -86,7 +90,7 @@ def levelOptions():
     text = font.render("HARD", True, (0, 0, 0))
     text_rect = text.get_rect(center=hardButton.center)
     window.blit(text, text_rect)
-    pygame.display.update() 
+    pygame.display.update()
 
     # Extreme option
     pygame.draw.rect(window, PURPLE, extremeButton, border_radius=50)
@@ -94,14 +98,16 @@ def levelOptions():
     text_rect = text.get_rect(center=extremeButton.center)
     window.blit(text, text_rect)
 
-    pygame.display.update() 
+    pygame.display.update()
+
 
 def gameOverOptions(winner):
 
-    #results
-    winFont=pygame.font.SysFont('bitstreamverasans', 35, bold=True)
+    # results
+    winFont = pygame.font.SysFont('bitstreamverasans', 35, bold=True)
     pygame.draw.rect(window, BLACK, winnerPlate, border_radius=20)
-    text = font.render("Congratulations! "+ winner +" won the match", True, (255, 255, 255))
+    text = font.render("Congratulations! " + winner +
+                       " won the match", True, (255, 255, 255))
     text_rect = text.get_rect(center=winnerPlate.center)
     window.blit(text, text_rect)
 
@@ -116,7 +122,8 @@ def gameOverOptions(winner):
     text = font.render("Exit Game", True, (0, 0, 0))
     text_rect = text.get_rect(center=exitButtonPause.center)
     window.blit(text, text_rect)
-    pygame.display.update() 
+    pygame.display.update()
+
 
 def toggle_turn(game):
     if game.turn == BLACK:
@@ -124,15 +131,16 @@ def toggle_turn(game):
     else:
         game.turn = BLACK
 
+
 def main():
     run = True
     game = Game(window)
     option = 0
-    choosenLevel=False
-    level=1
+    choosenLevel = False
+    level = 1
     start = False
-    pause=False
-    gameOverStatus=False
+    pause = False
+    gameOverStatus = False
     while run:
         if (not start):
             playOptions()
@@ -148,9 +156,10 @@ def main():
                         break
                     elif exitButton.collidepoint(event.pos):
                         run = False
-                        break  
+                        break
             pygame.display.update()
-        if not run: break          
+        if not run:
+            break
         elif start:
             if not choosenLevel:
                 pygame.display.update()
@@ -161,27 +170,28 @@ def main():
                         break
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if easyButton.collidepoint(event.pos):
-                            choosenLevel=True
-                            level=1
+                            choosenLevel = True
+                            level = 1
                             pygame.time.delay(600)
                             break
                         elif mediumButton.collidepoint(event.pos):
-                            choosenLevel=True
-                            level=1
+                            choosenLevel = True
+                            level = 1
                             pygame.time.delay(600)
                         elif hardButton.collidepoint(event.pos):
-                            choosenLevel=True
-                            level=3
+                            choosenLevel = True
+                            level = 3
                             pygame.time.delay(600)
                         elif extremeButton.collidepoint(event.pos):
-                            choosenLevel=True
-                            level=4
+                            choosenLevel = True
+                            level = 4
                             pygame.time.delay(600)
-                
-            if not run: break
-            elif choosenLevel:                  
+
+            if not run:
+                break
+            elif choosenLevel:
                 if game.turn == WHITE:
-                    value, new_board = minimax(game.get_board(), level, WHITE)
+                    value, new_board = minimax(game.get_board(), level, True)
                     if new_board:
                         game.ai_move(new_board)
                     toggle_turn(game)
@@ -189,7 +199,7 @@ def main():
                 if game.board.isWin() is not None:
                     window.fill(BLACK)
                     pygame.display.update()
-                    gameOverStatus=True
+                    gameOverStatus = True
                     gameOverOptions(game.board.isWin())
                     pygame.time.delay(1000)
                     while gameOverStatus:
@@ -200,16 +210,17 @@ def main():
                                 break
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if resetButton.collidepoint(event.pos):
-                                    game=Game(window)
-                                    gameOverStatus=False
+                                    game = Game(window)
+                                    gameOverStatus = False
                                     break
                                 elif exitButtonPause.collidepoint(event.pos):
                                     run = False
                                     gameOverStatus = False  # Exit the loop when the user clicks the exit button
                                     break
 
-                if not run: break
-                if game.turn==BLACK:
+                if not run:
+                    break
+                if game.turn == BLACK:
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             run = False
@@ -219,12 +230,12 @@ def main():
                             pos = pygame.mouse.get_pos()
                             row, col = get_row_col_from_mouse(pos)
                             game.select(row, col)
-                            
+
                         if event.type == pygame.KEYDOWN:
                             if event.key == K_ESCAPE:
                                 window.fill(BLACK)
                                 pygame.display.update()
-                                pause=True
+                                pause = True
                                 pauseOptions()
                                 pygame.time.delay(1000)
                                 while pause:
@@ -235,14 +246,14 @@ def main():
                                             break
                                         if event.type == pygame.MOUSEBUTTONDOWN:
                                             if continueButton.collidepoint(event.pos):
-                                                pause=False  # Continue the game when the user clicks the continue button
+                                                pause = False  # Continue the game when the user clicks the continue button
                                                 window.fill(BLACK)
                                                 pygame.time.delay(250)
                                                 game.update()
                                                 break
                                             elif resetButton.collidepoint(event.pos):
-                                                game=Game(window)
-                                                pause=False
+                                                game = Game(window)
+                                                pause = False
                                                 break
                                             elif exitButtonPause.collidepoint(event.pos):
                                                 run = False
@@ -250,10 +261,7 @@ def main():
                                                 break
                     game.update()
 
-       
-
-
     pygame.quit()
 
 
-main()  
+main()

@@ -367,6 +367,7 @@ def miniMax(board, maximizing, alpha=-float('inf'), beta=float('inf')):
     # DRAW
     if finalState==-1 and isFull(board) == True:
         return [0, None]
+        
     if maximizing:
         bestMove = None
         emptySquares = getEmptySquares(board)
