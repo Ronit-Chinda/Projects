@@ -4,4 +4,4 @@
 
 ![preview](./preview/loss.png)
 
-![preview](./preview/heatmap.png)
+![preview](./preview/heatMap.png)
